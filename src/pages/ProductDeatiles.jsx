@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import AddToCartBtn from "./../components/AddToCartBtn";
 import Navbar from "../components/Navbar";
 import Footer from './../sections/Footer';
-
+import Price from "../components/Price";
 const ProductDetails = () => {
   const { id } = useParams();
 
@@ -51,9 +51,7 @@ const ProductDetails = () => {
           <div className="mt-10">
             <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
             <p className="text-gray-600 mb-4">{product.brand}</p>
-            <h2 className="text-2xl text-green-600 font-semibold mb-4">
-              {product.price} {product.currency}
-            </h2>
+            <Price currency={product.currency} price={product.price} discountPrice={product.discountPrice} productPage/>
             <p className="mb-6">{product.description}</p>
             <AddToCartBtn item={product} />
           </div>

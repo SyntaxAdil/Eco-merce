@@ -2,7 +2,7 @@
 
 const Hero = () => {
   return (
-    <section className=" h-100 w-full bg-[url('/hero.avif')] bg-contain bg-no-repeat  bg-center  my-25">
+    <section className=" min-h-[70dvh] w-full bg-[url('/hero.png')] bg-cover bg-no-repeat  bg-center  my-25">
         
       
     </section>

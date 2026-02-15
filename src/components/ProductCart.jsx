@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import AddToCartBtn from "./AddToCartBtn";
+import Price from "./Price";
 const ProductCart = ({
   item,
   id,
@@ -26,22 +27,7 @@ const ProductCart = ({
           <h1 className="font-semibold">{name}</h1>
           <div className="flex items-center justify-between">
             <p className="font-medium">{brand}</p>
-            {discountPrice ? (
-              <div className="flex gap-1 items-center">
-                <p>
-                  {discountPrice} {currency}
-                </p>
-                <del className="text-sm">
-                  {price}
-                  {currency}
-                </del>
-              </div>
-            ) : (
-              <p>
-                {price}
-                {currency}
-              </p>
-            )}
+           <Price currency={currency} discountPrice={discountPrice} price={price}  />
           </div>
         </div>
       </Link>

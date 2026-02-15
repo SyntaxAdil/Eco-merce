@@ -19,6 +19,9 @@ const AddToCartProduct = () => {
           ← Back to home
         </Link>
         <div className="">
+
+          {cart.length===0 && <h1 className="text-5xl font-bold min-h-80 flex items-center justify-center text-gray-600 ">No products in your cart yet
+</h1>}
           {cart.map((item, index) => {
             return (
               <div

@@ -6,7 +6,9 @@ const AddToCartContext = createContext(null);
 export const useCart = () => useContext(AddToCartContext);
 
 const AddToCartProvider = ({ children }) => {
+  
   const [cart, setCart] = useState(()=>{
+    
     try{
       const store=localStorage.getItem("cart")
     return store? JSON.parse(store):[]
@@ -35,8 +37,16 @@ const AddToCartProvider = ({ children }) => {
 
   const dltToCartFun = (product) => {
     if (!product) return;
-    const filtered = cart.filter((item) => item !== product);
-    setCart(filtered);
+     if (cart.find((item) => item.id === product.id && item.qty>1 )  ) {
+      return setCart((prev) =>
+        prev.map((item) => item.id === product.id ? { ...item, qty: item.qty - 1 } : item
+        ),
+      );
+    } else {
+      // setCart((prev) => [...prev, { ...product, qty: 1 }]);
+      const filtered = cart.filter((item) => item !== product);
+      setCart(filtered);
+    }
   };
 
   return (
