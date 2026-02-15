@@ -4,7 +4,7 @@ import { ShoppingCart } from "lucide-react";
 
 const Navbar = () => {
   return (
-    <nav className="container mx-auto max-w-6xl flex items-center justify-between my-4 px-6 py-2  rounded-full fixed top-0 left-0 right-0  z-50 backdrop-blur-2xl border border-white/10 shadow ">
+    <nav className="container mx-auto max-w-6xl flex items-center justify-between my-4 px-6 py-2  rounded-full fixed top-0 left-0 right-0  z-50 backdrop-blur-2xl border border-white/10 shadow-lg ">
       <div>
         <Link to={"/"}>
           <h2 className="text-xl font-bold uppercase">
