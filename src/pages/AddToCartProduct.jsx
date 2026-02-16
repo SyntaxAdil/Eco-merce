@@ -33,7 +33,7 @@ const AddToCartProduct = () => {
           <h1 className="text-xl">
             Total:{" "}
             {cart.reduce(
-              (acc, val) => Math.round(acc + val.qty * val.discountPrice),
+              (acc, val) => val.discountPrice ?  Math.round(acc + val.qty * val.discountPrice) :  Math.round(acc + val.qty * val.price),
               0,
             )}{" "}
             USD

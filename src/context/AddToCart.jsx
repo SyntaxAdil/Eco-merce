@@ -34,7 +34,7 @@ const AddToCartProvider = ({ children }) => {
       setCart((prev) => [...prev, { ...product, qty: 1 }]);
     }
     toast.success("Added to your cart!", {
-      position: "top-right",
+      position: "bottom-right",
       autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: false,
@@ -61,7 +61,7 @@ const AddToCartProvider = ({ children }) => {
     }
 
     toast.warn("Removed from your cart.", {
-      position: "top-right",
+      position: "bottom-right",
       autoClose: 1000,
       hideProgressBar: false,
       closeOnClick: false,

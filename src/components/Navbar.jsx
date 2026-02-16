@@ -1,9 +1,10 @@
 import { Link } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
-import { useCart } from './../context/AddToCart';
+import { useCart } from "./../context/AddToCart";
 
 const Navbar = () => {
-  const {cart}=useCart();
+  const { cart } = useCart();
+ 
   return (
     <nav className="container mx-auto max-w-6xl flex items-center justify-between my-4 px-6 py-2  rounded-full fixed top-0 left-0 right-0  z-50 backdrop-blur-2xl border border-white/10 shadow-lgnpm ">
       <div>
@@ -25,9 +26,13 @@ const Navbar = () => {
           <ShoppingCart />
         </Link>
 
-        {cart.length > 0 && <span className="absolute  top-0 -right-2 w-3 h-3 p-2 rounded-full bg-red-400 flex items-center justify-center text-[12px]">{cart.length}
+         {cart.length > 0 && <span className="absolute  top-0 -right-2 w-3 h-3 p-2 rounded-full bg-red-400 flex items-center justify-center text-[10px]">
+          {cart.reduce((acc,item)=>acc+=item.qty,0)}
+          
 
-        </span>}
+        </span>} 
+
+        
       </button>
     </nav>
   );
