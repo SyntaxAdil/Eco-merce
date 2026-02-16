@@ -32,14 +32,24 @@ const AddToCartProvider = ({ children }) => {
       setCart((prev) =>
         prev.map((item) =>
           item.id === product.id
-            ? { ...item, qty: item.qty + quantityToAdd }
+            ? { ...item, qty: item.qty + quantityToAdd, added: true }
             : item,
         ),
       );
     } else {
-      setCart((prev) => [...prev, { ...product, qty: quantityToAdd }]);
+      setCart((prev) => [
+        ...prev,
+        { ...product, qty: quantityToAdd, added: true },
+      ]);
     }
 
+    setTimeout(() => {
+    setCart(prev =>
+      prev.map(item =>
+        item.id === product.id ? { ...item, added: false } : item
+      )
+    );
+  }, 2000);
     toast.success("Added to your cart!", {
       position: "bottom-right",
       autoClose: 1000,
@@ -53,6 +63,7 @@ const AddToCartProvider = ({ children }) => {
 
     // setCart((prev) => [...prev, { ...product, qty: 1 }]);
     const filtered = cart.filter((item) => item.id !== product.id);
+    filtered.forEach((i) => (i.added = false));
     setCart(filtered);
 
     toast.warn("Removed from your cart.", {

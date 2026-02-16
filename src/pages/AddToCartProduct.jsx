@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useCart } from "../context/AddToCart";
-import { X } from "lucide-react";
+import { X,ArrowLeft,Trash2  } from "lucide-react";
+
 import Navbar from "../components/Navbar";
 import Footer from "../sections/Footer";
 import { useEffect } from "react";
@@ -31,10 +32,10 @@ const AddToCartProduct = () => {
       <Navbar />
       <section className="relative container mx-auto max-w-6xl mt-20">
         <Link
-          className="text-right flex justify-end transition-colors duration-150 hover:text-blue-600"
+          className="text-right flex items-center gap-1 justify-end transition-colors duration-150 hover:text-blue-600"
           to={"/"}
         >
-          ← Back to home
+          <ArrowLeft size={16} /> Back to home
         </Link>
         <div className="">
           <AnimatePresence>
@@ -86,12 +87,12 @@ const AddToCartProduct = () => {
                           </div>
                         </div>
                       )}
-                      <Quantity
+                      {item.stock>=1 && <Quantity
                         cartPage
                         setCart={setCart}
                         item={item}
                         qty={item.qty}
-                      />
+                      />}
                     </div>
                   </div>
                   <button
@@ -107,22 +108,31 @@ const AddToCartProduct = () => {
         </div>
         <div className="flex items-center justify-between mt-10 ">
           <h1 className="text-xl font-bold">
-            Total:{" "}
+            <strong className="text-purple-300">Total</strong>:{" "}
             {cart.reduce(
               (acc, val) =>
+                val.stock>1 ?
                 val.discountPrice
-                  ? (acc + val.qty * val.discountPrice)
-                  : (acc + val.qty * val.price),
+                  ?  (acc +  val.qty * val.discountPrice)
+                  :  (acc + val.qty * val.price)
+                  :
+                  0,
               0,
             ).toFixed(3)}{" "}
             USD
           </h1>
-          <button
-            className="text-xl bg-orange-800 px-3 cursor-pointer font-semibold py-2 rounded-md"
+          <div className="flex items-center gap-5">
+            <button
+            className="text-lg bg-orange-800 px-3 cursor-pointer font-semibold py-2 rounded-md
+            transition-all duration-200 hover:-translate-y-1 hover:shadow-orange-900 "
             onClick={buyNow}
           >
             Buy Now
           </button>
+         {cart.length>=1 &&  <button onClick={()=>setCart([])} className="flex gap-1 text-lg items-center cursor-pointer transition-all duration-200 bg-purple-900 px-3 py-2 rounded-md font-semibold shadow hover:shadow-purple-900 hover:-translate-y-1">
+            <Trash2 /> Clear Carts
+          </button>}
+          </div>
         </div>
       </section>
 

@@ -1,20 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import AddToCartBtn from "./../components/AddToCartBtn";
 import Navbar from "../components/Navbar";
 import Footer from "./../sections/Footer";
 import Price from "../components/Price";
 import Quantity from "./../components/Quantity";
+import { useCart } from "./../context/AddToCart";
 
 const ProductDetails = () => {
   const { id } = useParams();
-
+  const { cart } = useCart();
   const [product, setProduct] = useState(null);
+  const isAdded = cart.find((i) => i.id === Number(id))?.added || false;
 
-
-  const [qty,setQty] =useState(1)
-
+  const [qty, setQty] = useState(1);
 
   useEffect(() => {
     if (product?.name) {
@@ -36,6 +35,7 @@ const ProductDetails = () => {
   }, [id]);
 
   if (!product) return <h2 className="text-center mt-10">Loading...</h2>;
+
   return (
     <>
       <Navbar />
@@ -69,15 +69,11 @@ const ProductDetails = () => {
             </div>
 
             {/* Price Section */}
-            <div className="mb-6">
-              <span className="text-2xl font-bold text-green-600">
-                {product.currency} {product.discountPrice}
-              </span>
-              <span className="ml-3 line-through text-gray-400">
-                {product.currency} {product.price}
-              </span>
-            </div>
-
+            <Price
+              currency={product.currency}
+              discountPrice={product.discountPrice}
+              price={product.price}
+            />
             {/* Description */}
             <p className="text-gray-300 mb-6">{product.description}</p>
 
@@ -97,8 +93,12 @@ const ProductDetails = () => {
             {/* Quantity */}
             <Quantity qty={qty} setQty={setQty} />
             {/* Button */}
-            <AddToCartBtn  item={{...product,qty}} />
-            
+
+            <AddToCartBtn
+              item={{ ...product, qty }}
+              content={isAdded ? "Added to cart" : "Add to cart"}
+              isDisable={isAdded ? true : false}
+            />
           </div>
         </div>
       </section>
