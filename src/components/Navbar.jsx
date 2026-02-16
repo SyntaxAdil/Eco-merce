@@ -26,7 +26,7 @@ const Navbar = () => {
           <ShoppingCart />
         </Link>
 
-         {cart.length > 0 && <span className="absolute  top-0 -right-2 w-3 h-3 p-2 rounded-full bg-red-400 flex items-center justify-center text-[10px]">
+         {cart.length > 0 && <span className="absolute pointer-none  top-0 -right-2 w-3 h-3 p-2 rounded-full bg-red-400 flex items-center justify-center text-[10px]">
           {cart.reduce((acc,item)=>acc+=item.qty,0)}
           
 

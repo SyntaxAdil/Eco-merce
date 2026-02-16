@@ -3,23 +3,26 @@ import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import AddToCartBtn from "./../components/AddToCartBtn";
 import Navbar from "../components/Navbar";
-import Footer from './../sections/Footer';
+import Footer from "./../sections/Footer";
 import Price from "../components/Price";
+import Quantity from "./../components/Quantity";
+
 const ProductDetails = () => {
   const { id } = useParams();
 
   const [product, setProduct] = useState(null);
-  // useEffect(()=>{
-  //       document.title=`Eco merce -- ${product.name}`
-  //   },[product])
-  useEffect(() => {
-  if (product?.name) {
-    document.title = `Ecommerce -- ${product.name}`;
-  }
-}, [product]);
+
+
+  const [qty,setQty] =useState(1)
+
 
   useEffect(() => {
+    if (product?.name) {
+      document.title = `Ecommerce -- ${product.name}`;
+    }
+  }, [product]);
 
+  useEffect(() => {
     const fetchData = async () => {
       const res = await fetch("/product.json");
       const data = await res.json();
@@ -33,13 +36,11 @@ const ProductDetails = () => {
   }, [id]);
 
   if (!product) return <h2 className="text-center mt-10">Loading...</h2>;
-
   return (
     <>
       <Navbar />
-    <section className="container mx-auto max-w-6xl mt-20 px-6">
+      <section className="container mx-auto max-w-6xl mt-20 px-6">
         <div className="grid md:grid-cols-2 gap-12  p-10 rounded-2xl ">
-          
           {/* Product Image */}
           <div>
             <img
@@ -55,22 +56,16 @@ const ProductDetails = () => {
               Category: {product.category}
             </p>
 
-            <h1 className="text-3xl font-bold mb-2">
-              {product.name}
-            </h1>
+            <h1 className="text-3xl font-bold mb-2">{product.name}</h1>
 
-            <p className="text-gray-300 mb-4">
-              Brand: {product.brand}
-            </p>
+            <p className="text-gray-300 mb-4">Brand: {product.brand}</p>
 
             {/* Rating */}
             <div className="flex items-center gap-2 mb-4">
               <span className="text-yellow-500 font-semibold">
                 ⭐ {product.rating}
               </span>
-              <span className="text-gray-500">
-                ({product.reviews} reviews)
-              </span>
+              <span className="text-gray-500">({product.reviews} reviews)</span>
             </div>
 
             {/* Price Section */}
@@ -84,23 +79,29 @@ const ProductDetails = () => {
             </div>
 
             {/* Description */}
-            <p className="text-gray-300 mb-6">
-              {product.description}
-            </p>
+            <p className="text-gray-300 mb-6">{product.description}</p>
 
             {/* Extra Info */}
             <div className="text-sm text-gray-300 space-y-1 mb-6">
-              <p><strong>SKU:</strong> {product.sku}</p>
-              <p><strong>Stock:</strong> {product.stock} available</p>
-              <p><strong>Added On:</strong> {product.createdAt}</p>
+              <p>
+                <strong>SKU:</strong> {product.sku}
+              </p>
+              <p>
+                <strong>Stock:</strong> {product.stock} available
+              </p>
+              <p>
+                <strong>Added On:</strong> {product.createdAt}
+              </p>
             </div>
 
+            {/* Quantity */}
+            <Quantity qty={qty} setQty={setQty} />
             {/* Button */}
-            <AddToCartBtn item={product} />
+            <AddToCartBtn  item={{...product,qty}} />
+            
           </div>
         </div>
       </section>
-
 
       <Footer></Footer>
     </>

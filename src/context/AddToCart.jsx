@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { toast, Bounce } from "react-toastify";
+import Quantity from "../components/Quantity";
 
 const AddToCartContext = createContext(null);
 
@@ -24,23 +25,24 @@ const AddToCartProvider = ({ children }) => {
       console.warn("No product passed to addToCartFun!");
       return;
     }
+
+    const quantityToAdd = product.qty || 1;
+
     if (cart.find((item) => item.id === product.id)) {
       setCart((prev) =>
         prev.map((item) =>
-          item.id === product.id ? { ...item, qty: item.qty + 1 } : item,
+          item.id === product.id
+            ? { ...item, qty: item.qty + quantityToAdd }
+            : item,
         ),
       );
     } else {
-      setCart((prev) => [...prev, { ...product, qty: 1 }]);
+      setCart((prev) => [...prev, { ...product, qty: quantityToAdd }]);
     }
+
     toast.success("Added to your cart!", {
       position: "bottom-right",
       autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: false,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
       theme: "dark",
       transition: Bounce,
     });
@@ -48,17 +50,10 @@ const AddToCartProvider = ({ children }) => {
 
   const dltToCartFun = (product) => {
     if (!product) return;
-    if (cart.find((item) => item.id === product.id && item.qty > 1)) {
-      return setCart((prev) =>
-        prev.map((item) =>
-          item.id === product.id ? { ...item, qty: item.qty - 1 } : item,
-        ),
-      );
-    } else {
-      // setCart((prev) => [...prev, { ...product, qty: 1 }]);
-      const filtered = cart.filter((item) => item !== product);
-      setCart(filtered);
-    }
+
+    // setCart((prev) => [...prev, { ...product, qty: 1 }]);
+    const filtered = cart.filter((item) => item.id !== product.id);
+    setCart(filtered);
 
     toast.warn("Removed from your cart.", {
       position: "bottom-right",
